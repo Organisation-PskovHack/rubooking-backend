@@ -64,6 +64,18 @@ DATABASES = {
     }
 }
 
+# Djoser settings
+DJOSER = {
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "LOGIN_FIELD": "email",
+    "SERIALIZERS": {
+        "user": "account.serializers.UserSerializer",
+        "user_create": "account.serializers.CreateUserSerializer",
+        "user_create_password_retype": "account.serializers.CreateUserSerializer",
+        "current_user": "account.serializers.UserSerializer",
+        "token": "account.serializers.TokenSerializer"
+    }
+}
 # Static files (CSS, JavaScript, Images)
 STATIC_ROOT = join(os.path.dirname(BASE_DIR), "static")
 STATICFILES_DIRS = []
