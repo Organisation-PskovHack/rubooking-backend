@@ -239,3 +239,51 @@ class ReviewViewset(viewsets.GenericViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BookingViewset(viewsets.GenericViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+
+    def get_permissions(self):
+        if self.action == "create":
+            self.permission_classes = [IsAuthenticated, IsClient]
+        if self.action == "verified":
+            self.permission_classes = [IsAuthenticated, IsHotel]
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data["user"] = request.user.id
+
+        try:
+            HotelNumber.objects.get(
+                pk=data["hotel_number"],
+                hotel_id=data["hotel"]
+            )
+        except HotelNumber.DoesNotExist:
+            return Response("Отель не имеет такого номера!", status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer_class()
+        serializer = serializer(data=data)
+        if serializer.is_valid(raise_exception=False):
+            serializer.save(user_id=request.user.id)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(
+        detail=True,
+        url_path="verified",
+        url_name="verified",
+        serializer_class=BookingSerializer
+    )
+    def verified(self, request, pk=None):
+        instanse = self.get_object()
+        serializer = self.serializer_class(instanse, data={"verified": True}, partial=True)
+        if serializer.is_valid(raise_exception=False):
+            serializer.update(instanse, serializer.validated_data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
