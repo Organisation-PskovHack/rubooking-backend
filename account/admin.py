@@ -18,3 +18,7 @@ class HotelInline(admin.StackedInline):
     model = Hotel
     extra = 0
 
+
+class ClientInline(admin.StackedInline):
+    model = Client
+    extra = 0
