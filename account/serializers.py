@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from .models import (
     Hotel,
     Client,
@@ -44,3 +45,13 @@ class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = "__all__"
+
+
+class TokenSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(source="user.id")
+    auth_token = serializers.CharField(source="key")
+    type = serializers.CharField(source="user.type")
+
+    class Meta:
+        model = Token
+        fields = ("id", "auth_token", "type", "verification")
