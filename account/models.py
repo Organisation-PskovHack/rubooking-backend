@@ -81,3 +81,17 @@ class Client(models.Model):
     class Meta:
         verbose_name = "Клиент"
         verbose_name_plural = "Клиенты"
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, verbose_name="Клиент", on_delete=models.CASCADE, related_name="reviews")
+    hotel = models.ForeignKey(Hotel, verbose_name="Отель", on_delete=models.CASCADE, related_name="reviews")
+    rate = models.PositiveIntegerField(
+        verbose_name="Оценка",
+        validators=[validators.MinValueValidator(1), validators.MaxValueValidator(5)]
+    )
+    text = models.TextField(verbose_name="Текст отзыва")
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"
