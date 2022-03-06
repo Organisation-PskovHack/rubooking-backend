@@ -23,3 +23,10 @@ class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = "__all__"
+
+
+class HotelNumberSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = HotelNumber
+        fields = "__all__"
