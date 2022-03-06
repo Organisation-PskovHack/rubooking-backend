@@ -95,3 +95,14 @@ class Review(models.Model):
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
+
+
+class Booking(models.Model):
+    user = models.ForeignKey(User, verbose_name="Клиент", on_delete=models.CASCADE, related_name="bookings")
+    hotel = models.ForeignKey(Hotel, verbose_name="Отель", on_delete=models.CASCADE, related_name="bookings")
+    hotel_number = models.ForeignKey(HotelNumber, verbose_name="Номер отеля", on_delete=models.CASCADE, related_name="bookings")
+    date = models.DateField(verbose_name="Дата бронирования")
+
+    class Meta:
+        verbose_name = "Бронь"
+        verbose_name_plural = "Брони"
