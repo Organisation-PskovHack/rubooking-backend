@@ -107,3 +107,34 @@ class Booking(models.Model):
     class Meta:
         verbose_name = "Бронь"
         verbose_name_plural = "Брони"
+
+
+# Proxy models
+class UserHotelManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(type=User.Types.HOTEL)
+
+
+class UserHotel(User):
+
+    objects = UserHotelManager()
+
+    class Meta:
+        proxy = True
+        verbose_name = "Отель"
+        verbose_name_plural = "Отели"
+
+
+class UserClientManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(type=User.Types.CLIENT)
+
+
+class UserClient(User):
+
+    objects = UserClientManager()
+
+    class Meta:
+        proxy = True
+        verbose_name = "Клиент"
+        verbose_name_plural = "Клиенты"
