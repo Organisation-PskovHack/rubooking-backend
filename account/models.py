@@ -48,3 +48,17 @@ class Hotel(models.Model):
     class Meta:
         verbose_name = "Отель"
         verbose_name_plural = "Отели"
+
+
+class HotelNumber(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+
+    hotel = models.ForeignKey(Hotel, verbose_name="Отель", on_delete=models.CASCADE, related_name="numbers")
+    residents = models.PositiveIntegerField(verbose_name="Количество проживающих")
+    beds = models.PositiveIntegerField(verbose_name="Количество спальных мест")
+    terms = models.TextField(verbose_name="Условия проживания")
+    cost = models.PositiveIntegerField(verbose_name="Стоимость")
+
+    class Meta:
+        verbose_name = "Номер отеля"
+        verbose_name_plural = "Номера отеля"
