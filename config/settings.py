@@ -39,6 +39,7 @@ ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"
 
 # General
+AUTH_USER_MODEL = "account.User"
 APPEND_SLASH = True
 LANGUAGE_CODE = "ru"
 LOGIN_REDIRECT_URL = "/"
