@@ -13,3 +13,8 @@ from .models import (
 admin.site.register(HotelNumber)
 admin.site.register(Booking)
 
+
+class HotelInline(admin.StackedInline):
+    model = Hotel
+    extra = 0
+
