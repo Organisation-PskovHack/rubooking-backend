@@ -9,3 +9,7 @@ from .models import (
     Booking,
     Review
 )
+
+admin.site.register(HotelNumber)
+admin.site.register(Booking)
+
