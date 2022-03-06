@@ -22,3 +22,9 @@ class HotelInline(admin.StackedInline):
 class ClientInline(admin.StackedInline):
     model = Client
     extra = 0
+
+
+class ReviewInline(admin.StackedInline):
+    model = Review
+    extra = 0
+
