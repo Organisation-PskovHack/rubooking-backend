@@ -30,3 +30,10 @@ class HotelNumberSerializer(serializers.ModelSerializer):
     class Meta:
         model = HotelNumber
         fields = "__all__"
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Review
+        fields = "__all__"
