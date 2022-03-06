@@ -64,12 +64,19 @@ class HotelNumber(models.Model):
         verbose_name_plural = "Номера отеля"
 
 
+class ClientManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(user__type=User.Types.CLIENT)
+
+
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     phone = models.CharField(verbose_name="Номер телефона", max_length=255)
     birth_date = models.DateField(verbose_name="Дата рождения")
     citizenship = models.CharField(verbose_name="Гражданство", max_length=255)
+
+    objects = ClientManager()
 
     class Meta:
         verbose_name = "Клиент"
