@@ -29,6 +29,12 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+
+class HotelManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(user__type=User.Types.HOTEL)
+
+
 class Hotel(models.Model):
     title = models.CharField(verbose_name="Название", max_length=255)
     image = models.ImageField(verbose_name="Фото")
@@ -36,6 +42,8 @@ class Hotel(models.Model):
     description = models.TextField(verbose_name="Описание")
     terms = models.TextField(verbose_name="Условия проживания")
     rate = models.PositiveIntegerField(verbose_name="Рейтинг")
+
+    objects = HotelManager()
 
     class Meta:
         verbose_name = "Отель"
