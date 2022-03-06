@@ -35,3 +35,9 @@ class AdminHotel(admin.ModelAdmin):
     exclude = ("password", "is_active", "is_staff", "is_superuser",
                "last_login", "date_joined", "user_permissions", "groups")
 
+
+@admin.register(UserClient)
+class AdminClient(admin.ModelAdmin):
+    inlines = (ClientInline, ReviewInline)
+    exclude = ("password", "is_active", "is_staff", "is_superuser",
+               "last_login", "date_joined", "user_permissions", "groups")
