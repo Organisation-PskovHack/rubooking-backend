@@ -62,3 +62,15 @@ class HotelNumber(models.Model):
     class Meta:
         verbose_name = "Номер отеля"
         verbose_name_plural = "Номера отеля"
+
+
+class Client(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+
+    phone = models.CharField(verbose_name="Номер телефона", max_length=255)
+    birth_date = models.DateField(verbose_name="Дата рождения")
+    citizenship = models.CharField(verbose_name="Гражданство", max_length=255)
+
+    class Meta:
+        verbose_name = "Клиент"
+        verbose_name_plural = "Клиенты"
