@@ -102,6 +102,7 @@ class Booking(models.Model):
     hotel = models.ForeignKey(Hotel, verbose_name="Отель", on_delete=models.CASCADE, related_name="bookings")
     hotel_number = models.ForeignKey(HotelNumber, verbose_name="Номер отеля", on_delete=models.CASCADE, related_name="bookings")
     date = models.DateField(verbose_name="Дата бронирования")
+    verified = models.BooleanField(verbose_name="Подтверждено?", default=False)
 
     class Meta:
         verbose_name = "Бронь"
