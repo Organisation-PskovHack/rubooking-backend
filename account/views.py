@@ -35,6 +35,15 @@ class HotelViewset(viewsets.GenericViewSet):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
 
+    def get_queryset(self):
+        queryset = Hotel.objects.all()
+
+        address = self.request.query_params.get("address")
+        if address:
+            queryset = queryset.filter(address=address)
+
+        return queryset
+
     def get_permissions(self):
         if self.action == "create":
             self.permission_classes = [IsAuthenticated, IsHotel]
