@@ -29,4 +29,14 @@ class User(AbstractUser):
 
     objects = UserManager()
 
-# Create your models here.
+class Hotel(models.Model):
+    title = models.CharField(verbose_name="Название", max_length=255)
+    image = models.ImageField(verbose_name="Фото")
+    address = models.TextField(verbose_name="Адрес")
+    description = models.TextField(verbose_name="Описание")
+    terms = models.TextField(verbose_name="Условия проживания")
+    rate = models.PositiveIntegerField(verbose_name="Рейтинг")
+
+    class Meta:
+        verbose_name = "Отель"
+        verbose_name_plural = "Отели"
