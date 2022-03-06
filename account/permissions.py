@@ -12,3 +12,9 @@ class IsHotel(BasePermission):
     def has_object_permission(self, request, view, obj):
         user = request.user
         return user.id == obj.hotel.pk
+
+
+class IsClient(BasePermission):
+    def has_permission(self, request, view):
+        user = request.user
+        return user.type == User.Types.CLIENT
