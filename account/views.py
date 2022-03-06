@@ -218,3 +218,24 @@ class ClientViewset(viewsets.GenericViewSet):
         serializer = self.serializer_class(bookings, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class ReviewViewset(viewsets.GenericViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    def get_permissions(self):
+        if self.action == "create":
+            self.permission_classes = [IsAuthenticated, IsClient]
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data["user"] = request.user.id
+
+        serializer = self.get_serializer_class()
+        serializer = serializer(data=data)
+        if serializer.is_valid(raise_exception=False):
+            serializer.save(user_id=request.user.id)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
