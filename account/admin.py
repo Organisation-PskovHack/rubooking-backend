@@ -28,3 +28,10 @@ class ReviewInline(admin.StackedInline):
     model = Review
     extra = 0
 
+
+@admin.register(UserHotel)
+class AdminHotel(admin.ModelAdmin):
+    inlines = (HotelInline, )
+    exclude = ("password", "is_active", "is_staff", "is_superuser",
+               "last_login", "date_joined", "user_permissions", "groups")
+
